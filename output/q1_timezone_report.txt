@@ -1,0 +1,22 @@
+
+Timezone Report
+
+- What timezone was your original data in?
+The original data did not have timezone information. It only had datetime values like month, year, and day.
+
+- How did you localize the data?
+I localized the data to by using the tz_localize('UTC') method in pandas to localize the dates to UTC time.
+
+- What timezone did you convert to?
+I converted the timezone to 'US/Eastern' using the tz_convert('US/Eastern') method.
+
+- What issues did you encounter with DST? (Note: Using UTC avoids DST ambiguity)
+I did not encounter any issues with DST because I stored the data in UTC, which does not observe daylight saving time. 
+Using UTC avoids the DST ambiguity.
+
+- Include at least one example showing a datetime before and after conversion
+Sample timestamp of '2023-03-12 10:00:00' in UTC will be converted to '2023-03-12 05:00:00-05:00' in US/Eastern timezone before the day light savings change, and to '2023-03-12 06:00:00-04:00' after the day light savings change. 
+This demonstrates how the 1 hour shift due to DST is handled.
+
+- Explain why UTC is recommended as the base timezone for storing temporal data
+UTC is recommended as the base timezone for storing temporal data because it provides a consistent reference point, making it easier to manage and analyze across different regions.

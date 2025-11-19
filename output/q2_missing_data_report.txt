@@ -1,0 +1,92 @@
+
+Missing Data Report
+
+Missing Value Summary:
+Missing Values Total Count: 323
+Percentage Missing: 96.42%%
+The percentage of missing data is quite high because of the upsampling process.
+
+Imputation Method: Forward fill (ffill) and Backward fill (bfill)
+Rationale:
+I chose forward fill and backward fill methods because they are straightforward and effective for time series data where values tend to remain stable over short periods. By carrying forward the last known value and filling backward from the next known value, we can maintain continuity in the data without introducing abrupt changes that might occur with other methods like interpolation.
+Pros and Cons:
+Pros:
+1. Easy to implement and understand.
+2. Preserves existing data points because it does not introduce new values that could change trends.
+Cons:
+1. Not good for data with quick changes as it may lead to extra periods of repeated values in datasets with high volatility.
+Example of Missing Data Before and After Imputation:   
+Before Imputation:
+date
+2023-01-31    98.777
+2023-02-01       NaN
+2023-02-02       NaN
+2023-02-03       NaN
+2023-02-04       NaN
+2023-02-05       NaN
+2023-02-06       NaN
+2023-02-07       NaN
+2023-02-08       NaN
+2023-02-09       NaN
+Freq: D, Name: temperature, dtype: float64
+After Forward Fill Imputation:
+date
+2023-01-31    98.777
+2023-02-01    98.777
+2023-02-02    98.777
+2023-02-03    98.777
+2023-02-04    98.777
+2023-02-05    98.777
+2023-02-06    98.777
+2023-02-07    98.777
+2023-02-08    98.777
+2023-02-09    98.777
+Freq: D, Name: temperature, dtype: float64
+After Backward Fill Imputation:
+date
+2023-01-31    98.777000
+2023-02-01    99.001287
+2023-02-02    99.001287
+2023-02-03    99.001287
+2023-02-04    99.001287
+2023-02-05    99.001287
+2023-02-06    99.001287
+2023-02-07    99.001287
+2023-02-08    99.001287
+2023-02-09    99.001287
+Freq: D, Name: temperature, dtype: float64
+
+When/Why Data is Missing:
+Only January had no missing data, and the months after all had missing data. It could be data is only collected at the end of each month.
+For the day values, almost every day of the week had missing data. But the missing data seems to be evenly distributed across the week days.
+The missing values are caused by upsampling monthly data to daily frequency. The original dataset has daily measurements only for January, but the other months likely only has one observation per month. 
+When resampled to daily, we generated a full daily time index for each month, resulting in 29–30 missing values for every month after January.
+
+
+Missing patterns:
+Missing by month:
+date
+1      0
+2     27
+3     30
+4     29
+5     30
+6     29
+7     30
+8     30
+9     29
+10    30
+11    29
+12    30
+Name: temperature, dtype: int64
+
+Missing by day of week:
+date
+0    46
+1    45
+2    47
+3    46
+4    46
+5    47
+6    46
+Name: temperature, dtype: int64
